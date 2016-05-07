@@ -1,0 +1,11 @@
+{
+  "name": "nom-noms",
+  "homepage": "https://github.com/broken/nom-noms",
+  "authors": [ "nom-noms@robertneale.com" ],
+  "description": "Food website",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "bower_components"
+  ]
+}
