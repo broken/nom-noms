@@ -1,11 +1,18 @@
 {
   "name": "nom-noms",
   "homepage": "https://github.com/broken/nom-noms",
-  "authors": [ "nom-noms@robertneale.com" ],
+  "authors": [
+    "nom-noms@robertneale.com"
+  ],
   "description": "Food website",
   "private": true,
   "ignore": [
     "**/.*",
     "bower_components"
-  ]
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "iron-elements": "PolymerElements/iron-elements#^1.0.10",
+    "paper-elements": "PolymerElements/paper-elements#^1.0.7"
+  }
 }
