@@ -1,0 +1,40 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="nom-noms-page-behavior.html">
+
+<dom-module id="nom-noms-view-meals">
+  <template>
+    <style>
+      #content {
+        height: 100%;
+        background-color: grey;
+      }
+      paper-item {
+        background-color: #333;
+      }
+    </style>
+    <paper-item id="title" on-tap="onExitTap">view meals</paper-item>
+    <div id="content">yolo</div>
+  </template>
+</dom-module>
+
+<script>
+  /* global Polymer */
+  Polymer({
+    is: 'nom-noms-view-meals',
+    behaviors: [
+      NomNoms.PageBehavior, /* global NomNoms */
+    ],
+    properties: {
+      sharedElements: {
+        type: Object,
+        value: function() {
+          return {
+            'hero': this.$.title,
+            'ripple': this.$.content
+          }
+        }
+      },
+    },
+  });
+</script>

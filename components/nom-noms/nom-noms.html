@@ -1,8 +1,26 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../neon-animation/neon-animated-pages.html">
+<link rel="import" href="nom-noms-add-meal.html">
+<link rel="import" href="nom-noms-add-place.html">
+<link rel="import" href="nom-noms-home.html">
+<link rel="import" href="nom-noms-search-places.html">
+<link rel="import" href="nom-noms-view-meals.html">
 
 <dom-module id="nom-noms">
   <template>
-    yolo
+    <style>
+      neon-animated-pages {
+        height: 100%;
+      }
+    </style>
+    <neon-animated-pages id="pages" selected="0">
+      <nom-noms-home on-page-select="onPageSelect"></nom-noms-home>
+      <nom-noms-add-meal on-home-select="onHomeSelect"></nom-noms-add-meal>
+      <nom-noms-view-meals on-home-select="onHomeSelect"></nom-noms-view-meals>
+      <nom-noms-add-place on-home-select="onHomeSelect"></nom-noms-add-place>
+      <nom-noms-search-places on-home-select="onHomeSelect"></nom-noms-search-places>
+    </neon-animated-pages>
   </template>
 </dom-module>
 
@@ -11,6 +29,12 @@
   Polymer({
     is: 'nom-noms',
     properties: {
+    },
+    onPageSelect: function(event) {
+      this.$.pages.selected = event.detail.index;
+    },
+    onHomeSelect: function(event) {
+      this.$.pages.selected = 0;
     },
   });
 </script>

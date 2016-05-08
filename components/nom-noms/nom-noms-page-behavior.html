@@ -1,0 +1,50 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../neon-animation/neon-animations.html">
+<link rel="import" href="../neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
+<script>
+  window.NomNoms = window.NomNoms || {};
+  /* global NomNoms */
+  NomNoms.PageBehaviorImpl = {
+    properties: {
+      animationConfig: {
+        type: Object,
+        value: function() {
+          return {
+            'entry': [{
+              name: 'ripple-animation',
+              id: 'ripple',
+              toPage: this,
+            }, {
+              name: 'hero-animation',
+              id: 'hero',
+              toPage: this,
+              timing: {
+                delay: 150
+              },
+            }],
+            'exit': [{
+              name: 'fade-out-animation',
+              node: this
+            }, {
+              name: 'hero-animation',
+              id: 'hero',
+              fromPage: this
+            }]
+          }
+        }
+      }
+    },
+    onExitTap: function(event) {
+      this.animationConfig['exit'][0].gesture = {
+        x: event.x || event.pageX || event.detail.x,
+        y: event.y || event.pageY || event.detail.y
+      };
+      this.fire('home-select', {
+      });
+    },
+  };
+  /* global Polymer */
+  NomNoms.PageBehavior = [ NomNoms.PageBehaviorImpl, Polymer.NeonSharedElementAnimatableBehavior ];
+</script>
