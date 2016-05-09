@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../neon-animation/neon-animations.html">
 <link rel="import" href="../neon-animation/neon-shared-element-animatable-behavior.html">
 <link rel="import" href="../paper-item/paper-item.html">
@@ -46,5 +47,9 @@
     },
   };
   /* global Polymer */
-  NomNoms.PageBehavior = [ NomNoms.PageBehaviorImpl, Polymer.NeonSharedElementAnimatableBehavior ];
+  NomNoms.PageBehavior = [
+      NomNoms.PageBehaviorImpl,
+      Polymer.NeonSharedElementAnimatableBehavior,
+      Polymer.IronResizableBehavior,
+    ];
 </script>

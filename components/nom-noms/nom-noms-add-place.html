@@ -1,4 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../google-apis/google-maps-api.html">
+<link rel="import" href="../google-map/google-map.html">
+<link rel="import" href="../google-map/google-map-marker.html">
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="nom-noms-page-behavior.html">
 
@@ -7,14 +10,41 @@
     <style>
       #content {
         height: 100%;
+        color: black;
         background-color: grey;
       }
       paper-item {
         background-color: #333;
       }
+      #input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+      }
+      #input:focus {
+        border-color: #4d90fe;
+      }
     </style>
+    <google-maps-api id="gmaps" api-key="AIzaSyDCbPwRbnJjSLHOfstpP1uThF7BTLhYnW4"></google-maps-api>
     <paper-item id="title" on-tap="onExitTap">add place</paper-item>
-    <div id="content">yolo</div>
+    <div id="content">
+      <input id="input" class="controls" type="text" placeholder="Search Box">
+      <google-map map="{{map}}" latitude="34.0223405" longitude="-118.4377895" zoom="14" fit-to-markers
+                  api-key="AIzaSyDCbPwRbnJjSLHOfstpP1uThF7BTLhYnW4" on-google-map-ready="apiLoaded">
+        <template is="dom-repeat" items="{{markers}}" as="marker">
+          <google-map-marker latitude="{{marker.latitude}}"
+                             longitude="{{marker.longitude}}">
+            <div>{{marker.name}}</div>
+            <div>{{marker.place_id}}</div>
+            <div>{{marker.formatted_address}}</div>
+          </google-map-marker>
+        </template>
+      </google-map>
+    </div>
   </template>
 </dom-module>
 
@@ -35,6 +65,31 @@
           }
         }
       },
+      map: Object,
+      markers: {
+        type: Array,
+        value: function() { return []; },
+      },
+    },
+    apiLoaded: function() {
+      // Create the search box and link it to the UI element.
+      var searchBox = new this.$.gmaps.api.places.SearchBox(this.$.input);
+      this.map.controls[this.$.gmaps.api.ControlPosition.TOP_RIGHT].push(this.$.input);
+
+      // Bias the SearchBox results towards current map's viewport.
+      this.map.addListener('bounds_changed', function() {
+        searchBox.setBounds(this.map.getBounds());
+      }.bind(this));
+
+      // Listen for the event fired when the user selects a prediction
+      searchBox.addListener('places_changed', function() {
+        this.markers = searchBox.getPlaces().map(function(result) {
+          // obtain lat/long from geometry
+          result.latitude  = result.geometry.location.lat();
+          result.longitude = result.geometry.location.lng();
+          return result;
+        });
+      }.bind(this));
     },
   });
 </script>
